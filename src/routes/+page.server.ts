@@ -1,8 +1,8 @@
 import { getServerLists } from "$db/zicare_tsd/server";
 
-export async function load(request: Request): Promise<{ data: JSON }> {   
+export async function load(request: Request): Promise<{ data: Object }> {   
   // get employee from MongoDB
-  const task = await getServerLists();
+  const servers = await getServerLists();
   // return JSON response
-  return { data : JSON.stringify(task) };
+  return { data : servers };
 }
