@@ -46,8 +46,44 @@ export const serverRelationalAggregation = [
     }
   }, {
     '$project': {
-      'task_id': 0,
+      'task_id': 0
+    }
+  }, {
+    '$lookup': {
+      'from': 'employee', 
+      'localField': 'task.work_by', 
+      'foreignField': '_id', 
+      'as': 'task.work_by'
+    }
+  }, {
+    '$set': {
+      'task.work_by': {
+        '$first': '$task.work_by'
+      }
+    }
+  }, {
+    '$lookup': {
+      'from': 'employee', 
+      'localField': 'task.test_by', 
+      'foreignField': '_id', 
+      'as': 'task.test_by'
+    }
+  }, {
+    '$set': {
+      'task.test_by': {
+        '$first': '$task.test_by'
+      }
+    }
+  }, {
+    '$project': {
+      'task.server_id': 0, 
+      'task.status_id': 0
+    }
+  }, {
+    '$set': {
+      'task.created_date': {
+        '$toDate': '$task.created_date'
+      }
     }
   }
-  
 ];
